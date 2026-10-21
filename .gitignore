@@ -1,0 +1,9 @@
+.build/
+build/
+dist/
+.swiftpm/
+*.xcodeproj
+.DS_Store
+
+# Private research notes, not part of the project.
+DADROIT_CALISMA_PRENSIPLERI.md

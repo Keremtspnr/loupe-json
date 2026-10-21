@@ -1,0 +1,23 @@
+name: Bug report
+description: Something doesn't work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: file
+    attributes:
+      label: About the file
+      description: Size, format (JSON / NDJSON), and a small sample if you can share one.
+  - type: input
+    id: versions
+    attributes:
+      label: Loupe and macOS versions
+      placeholder: Loupe 0.1.0, macOS 15.4, Apple M2
+    validations:
+      required: true
