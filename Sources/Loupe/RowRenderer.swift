@@ -21,12 +21,21 @@ struct RowRenderer {
 
     var font: NSFont
 
+    /// Rows are one line high: long text is cut with "…" instead of wrapping into the next row.
+    private static let singleLine: NSParagraphStyle = {
+        let style = NSMutableParagraphStyle()
+        style.lineBreakMode = .byTruncatingTail
+        return style
+    }()
+
     func render(_ node: JsonNode, in doc: JsonDocument, highlight: Highlight?) -> NSAttributedString {
         let out = NSMutableAttributedString()
         var segments: [Segment] = []
 
         func add(_ text: String, _ color: NSColor) {
-            out.append(NSAttributedString(string: text, attributes: [.font: font, .foregroundColor: color]))
+            out.append(NSAttributedString(string: text, attributes: [
+                .font: font, .foregroundColor: color, .paragraphStyle: Self.singleLine,
+            ]))
         }
         func addSource(_ text: String, _ color: NSColor, source: Int, sourceLength: Int) {
             let display = out.length
@@ -62,6 +71,12 @@ struct RowRenderer {
             apply(highlight, to: out, segments: segments, doc: doc)
         }
         return out
+    }
+
+    /// Hover text for values that may not fit on one line.
+    func toolTip(for node: JsonNode, in doc: JsonDocument) -> String? {
+        guard node.role == .value, !node.record.isContainer, node.record.valueLen > 60 else { return nil }
+        return doc.valuePreview(node.record, limit: 4000)
     }
 
     private func addValue(

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 — 2026-10-22
+
+### Fixed
+- Long values no longer wrap onto a second line and overlap the next row. They stay on one line and end with "…".
+
+### Added
+- Hover over a long value to see it in full.
+
 ## 0.1.0 — 2026-10-22
 
 First public release.

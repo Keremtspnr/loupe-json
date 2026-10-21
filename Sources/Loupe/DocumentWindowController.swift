@@ -492,6 +492,7 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate,
         let id = NSUserInterfaceItemIdentifier("cell")
         let cell = outlineView.makeView(withIdentifier: id, owner: self) as? NSTableCellView ?? makeCell(id)
         cell.textField?.attributedStringValue = renderer.render(node, in: doc, highlight: highlight)
+        cell.textField?.toolTip = renderer.toolTip(for: node, in: doc)
         return cell
     }
 
@@ -546,6 +547,9 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate,
         cell.identifier = id
         let text = NSTextField(labelWithString: "")
         text.lineBreakMode = .byTruncatingTail
+        text.maximumNumberOfLines = 1
+        text.usesSingleLineMode = true
+        text.cell?.wraps = false
         text.translatesAutoresizingMaskIntoConstraints = false
         cell.addSubview(text)
         cell.textField = text
